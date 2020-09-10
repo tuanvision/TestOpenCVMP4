@@ -5,9 +5,13 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     defaultConfig {
         applicationId "com.example.testopencv"
-        minSdkVersion 23
+        minSdkVersion 28
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -24,6 +28,8 @@ android {
 }
 
 dependencies {
+//    implementation project(path: ':openCVLibrary343')
+//    implementation(project(":aacmvi"))
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.1'
@@ -33,5 +39,20 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    //ViewModel and LiveData
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+
+    def activity_version = "1.1.0"
+    // viewModels()
+    implementation "androidx.activity:activity-ktx:$activity_version"
+
+
+    //Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3")
+
 
 }

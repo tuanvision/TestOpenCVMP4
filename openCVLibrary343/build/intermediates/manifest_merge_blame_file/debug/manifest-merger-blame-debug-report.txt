@@ -4,7 +4,7 @@
 4    android:versionCode="3430"
 5    android:versionName="3.4.3" > <!-- <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="29" /> -->
 6    <uses-sdk
-7        android:minSdkVersion="23"
+7        android:minSdkVersion="28"
 7-->/Volumes/DATA/aicardio/testopencv/openCVLibrary343/src/main/AndroidManifest.xml
 8        android:targetSdkVersion="29" />
 8-->/Volumes/DATA/aicardio/testopencv/openCVLibrary343/src/main/AndroidManifest.xml
