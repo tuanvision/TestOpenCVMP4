@@ -8,10 +8,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.MotionEvent
-import com.example.testopencv.R
 import androidx.activity.viewModels
+import com.example.testopencv.MainActivity
+import com.example.testopencv.R
 import com.example.toast
 import kotlinx.android.synthetic.main.activity_reading_media.*
+import org.opencv.android.BaseLoaderCallback
+import org.opencv.android.LoaderCallbackInterface
+import org.opencv.android.OpenCVLoader
 
 class ReadingMediaActivity : AacMviActivity<ReadingMediaViewState, ReadingMediaViewEffect, ReadingMediaViewEvent, ReadingMediaActVM>(),
     OnDrawListener,
@@ -38,6 +42,39 @@ class ReadingMediaActivity : AacMviActivity<ReadingMediaViewState, ReadingMediaV
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        handle.removeCallbacksAndMessages(null)
+    }
+
+    private val mLoaderCallback: BaseLoaderCallback = object : BaseLoaderCallback(this) {
+        override fun onManagerConnected(status: Int) {
+            when (status) {
+                SUCCESS -> {
+                    Log.i(TAG, "OpenCV loaded successfully")
+//                    mOpenCvCameraView.enableView()
+//                    mOpenCvCameraView.setOnTouchListener(this@MainActivity)
+                }
+                else -> {
+                    super.onManagerConnected(status)
+                }
+            }
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.w(TAG, "Go onResume")
+        if (!OpenCVLoader.initDebug()) {
+            Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mLoaderCallback);
+        } else {
+            Log.d(TAG, "OpenCV library found inside package. Using it!");
+            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
+    }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reading_media)
@@ -61,7 +98,10 @@ class ReadingMediaActivity : AacMviActivity<ReadingMediaViewState, ReadingMediaV
         }
         when(viewState.status) {
             ReadingMediaViewStatus.Start -> {
-                Log.w(TAG, "Go ReadingMediaViewStatus.Start ${bitmapHeart?.width} ${bitmapHeart?.height}")
+                Log.w(
+                    TAG,
+                    "Go ReadingMediaViewStatus.Start ${bitmapHeart?.width} ${bitmapHeart?.height}"
+                )
                 iv_draw_canvas.setCustomImageBitmap(bitmapHeart)
             }
 
@@ -69,6 +109,9 @@ class ReadingMediaActivity : AacMviActivity<ReadingMediaViewState, ReadingMediaV
     }
 
     override fun renderViewEffect(viewEffect: ReadingMediaViewEffect) {
+//        Log.w(TAG, "${viewEffect}")
+        ReadingMP4MVI.renderViewEffect(this, viewEffect)
+        PlaybackMVI.renderViewEffect(this, viewEffect)
         when (viewEffect) {
             is ReadingMediaViewEffect.ShowToast -> toast(message = viewEffect.message)
         }

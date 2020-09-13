@@ -50,9 +50,14 @@ class PlaybackMVI {
     }
 
     private fun renderViewEffect(readingMediaActivity: ReadingMediaActivity, viewEffect: ReadingMediaViewEffect) {
+        Log.w(TAG, "Go Playback renderViewEffect")
+
         when (viewEffect) {
+
             is ReadingMediaViewEffect.RenderMP4Frame -> {
+                Log.w(TAG, "${viewEffect.rmf}")
                 renderReadingMediaFrame(readingMediaActivity, viewEffect)
+
             }
         }
     }
@@ -60,7 +65,10 @@ class PlaybackMVI {
     fun renderReadingMediaFrame(readingMediaActivity: ReadingMediaActivity, renderMP4Frame: ReadingMediaViewEffect.RenderMP4Frame) {
         Log.w(TAG, "renderReadingMediaFrame")
         if (renderMP4Frame.rmf.numFrame > 0) {
+
             readingMediaActivity.iv_draw_canvas.setCustomImageBitmap(renderMP4Frame.rmf.bitmap)
+
+
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.ReadingMediaFile
 import android.app.Application
 import aacmvi.AacMviViewModel
 import android.graphics.Bitmap
+import android.util.Log
 import com.example.repositories.RenderMP4FrameObject
 
 
@@ -34,11 +35,18 @@ class ReadingMediaActVM(applicationAnnotate: Application) : AacMviViewModel<Read
     }
 
     fun reduce(reducer: ReadingMediaActReducer) {
+
         val result = reducer.reduce()
+//        Log.w(TAG, "Go reduce VM ${result}")
         result.viewState?.let { viewState = it }
         result.viewEffect?.let { viewEffect = it }
     }
 
+    fun reduce(stateEffectObject: StateEffectObject) {
+
+        stateEffectObject.viewState?.let { viewState = it }
+        stateEffectObject.viewEffect?.let { viewEffect = it }
+    }
     fun getIsPlaying(): Boolean {
         return isPlaying
     }
@@ -57,7 +65,7 @@ class ReadingMediaActVM(applicationAnnotate: Application) : AacMviViewModel<Read
 
     fun getRenderReadingMediaFrame(): ReadingMediaViewEffect? {
         return if (currentFrameIndex >= 0 && currentFrameIndex < numFrame) {
-            val rmf = RenderMP4FrameObject(numFrame = viewState.bitmaps.size, bitmap = getCurrentFrameBitmap())
+            val rmf = RenderMP4FrameObject(numFrame = viewState.bitmaps.size, bitmap = getCurrentFrameBitmap(), idFrame = currentFrameIndex)
             return ReadingMediaViewEffect.RenderMP4Frame(rmf)
         } else null
     }

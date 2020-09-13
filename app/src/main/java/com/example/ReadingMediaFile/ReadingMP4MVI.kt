@@ -17,9 +17,12 @@ package com.example.ReadingMediaFile
  */
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import com.example.repositories.FolderRepository
 import kotlinx.coroutines.launch
+import org.opencv.android.Utils
+import com.example.toast
 
 class ReadingMP4MVI {
 
@@ -61,8 +64,8 @@ class ReadingMP4MVI {
     private fun renderViewState(readingMediaActivity: ReadingMediaActivity, viewState: ReadingMediaViewState) {
         when(viewState.status) {
             ReadingMediaViewStatus.ReadingMP4Sucess -> {
-//                Log.w("")
 
+//                Toast.makeText(viewS, "", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -84,21 +87,28 @@ class ReadingMP4MVI {
         : ReadingMediaActReducer(viewModel, viewState, viewEvent) {
 
         override fun reduce(): StateEffectObject {
-            var result = StateEffectObject()
+
+            if (viewState.status is ReadingMediaViewStatus.OnReadingMP4) {
+                return StateEffectObject(null, null)
+            }
+
+            val result = StateEffectObject(viewState=viewState.copy(status = ReadingMediaViewStatus.OnReadingMP4))
+
             Log.w(TAG, "Go ReducerLoadingMP4File")
+
             viewModel.viewModelScope.launch {
 
-                val fileMP4 = folderRepository.getFileMP4()
+                val fileMP4 = folderRepository.extractorMP4()
                 //
 //                val study = folderRepository.getStudyInformation()
 
-                Log.w(TAG, "fileMP4: ${fileMP4} len bitmaps: ${fileMP4.data.bitmaps.size}")
+                Log.w(TAG, "fileMP4: ${fileMP4.data.dicomPath} error: ${fileMP4.error} len bitmaps: ${fileMP4.data.bitmaps.size}")
 
                 if (fileMP4.error == false) {
-                    result = StateEffectObject(
+                    viewModel.reduce(StateEffectObject(
                         viewState.copy(status = ReadingMediaViewStatus.ReadingMP4Sucess, bitmaps = fileMP4.data.bitmaps),
                         viewEffect = ReadingMediaViewEffect.ShowToast("Done Reading MP4 file")
-                    )
+                    ))
                 }
             }
 

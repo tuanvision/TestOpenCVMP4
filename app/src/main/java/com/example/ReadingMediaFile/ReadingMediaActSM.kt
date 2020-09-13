@@ -12,6 +12,7 @@ data class ReadingMediaViewState(
 sealed class ReadingMediaViewStatus {
     object Start: ReadingMediaViewStatus()
     object ReadingMP4Sucess : ReadingMediaViewStatus()
+    object OnReadingMP4 : ReadingMediaViewStatus()
 
 }
 
