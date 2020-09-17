@@ -29,11 +29,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name="com.example.FragmentViewModel.FragmentViewModelActivity"></activity>
         <activity
             android:name="com.example.DrawerNavigation.DrawerNavigationActivity"
             android:label="@string/title_activity_drawer_navigation"
-            android:theme="@style/NoActionBar"></activity>
-        <!-- <activity -->
+            android:theme="@style/NoActionBar" /> <!-- <activity -->
         <!-- android:name="com.example.BottomNavigation.BottomNavigationActivity" -->
         <!-- android:label="@string/title_activity_bottom_navigation"></activity> -->
         <!-- <activity android:name="com.example.Navigation.NavigationActivity"></activity> -->
