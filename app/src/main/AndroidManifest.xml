@@ -28,25 +28,22 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
-        android:theme="@style/Theme.AppCompat.NoActionBar"
-
-        >
-<!--        <activity-->
-<!--            android:name="com.example.BottomNavigation.BottomNavigationActivity"-->
-
-<!--            android:label="@string/title_activity_bottom_navigation"></activity>-->
-
+        android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity
+            android:name="com.example.DrawerNavigation.DrawerNavigationActivity"
+            android:label="@string/title_activity_drawer_navigation"
+            android:theme="@style/NoActionBar"></activity>
+        <!-- <activity -->
+        <!-- android:name="com.example.BottomNavigation.BottomNavigationActivity" -->
+        <!-- android:label="@string/title_activity_bottom_navigation"></activity> -->
         <!-- <activity android:name="com.example.Navigation.NavigationActivity"></activity> -->
         <!-- <activity android:name="com.example.ReadingMediaFile.ReadingMediaActivity"></activity> -->
-
-<!--        android:theme="@style/Theme.AppCompat.NoActionBar"-->
-<!--        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
-
-
+        <!-- android:theme="@style/Theme.AppCompat.NoActionBar" -->
+        <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen" -->
         <activity android:name="com.example.BottomNavigation.BottomNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
